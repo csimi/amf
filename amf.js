@@ -1,6 +1,8 @@
 class AMF {
   encode(value) {
-    return this.inferType(value).encode()
+    let rawValues = [].concat(value)
+    let encodedValues = rawValues.map(rawValue => this.inferType(rawValue).encode())
+    return Buffer.concat(encodedValues)
   }
   decode(buffer) {}
   inferType(value) {
@@ -42,4 +44,5 @@ class AMF {
   }
 }
 
-export default AMF
+// export default AMF
+module.exports = AMF
