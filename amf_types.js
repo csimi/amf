@@ -5,7 +5,7 @@ export class AMFDouble {
     buffer.writeDoubleBE(value)
     return buffer
   }
-  decode() {}
+  decode(buffer) {}
 }
 
 export class AMFBoolean {
