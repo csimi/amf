@@ -6,6 +6,7 @@ var AMFTypes = require('./amf_types')
 var AMFDouble = AMFTypes.AMFDouble
 var AMFBoolean = AMFTypes.AMFBoolean
 var AMFString = AMFTypes.AMFString
+var AMFNull = AMFTypes.AMFNull
 
 class AMF0 extends AMF {
   handleNumber(value) {
@@ -25,6 +26,10 @@ class AMF0 extends AMF {
       bitLength = 32
     }
     return new AMFString(type, value, { bitLength })
+  }
+  handleNull(value) {
+    const type = 0x05
+    return new AMFNull(type)
   }
 }
 

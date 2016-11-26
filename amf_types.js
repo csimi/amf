@@ -2,7 +2,7 @@ class AMFType {
   constructor(type) {
     this.type = new Buffer([type])
   }
-  encode(buffer) {
+  encode(buffer = new Buffer(0)) {
     return Buffer.concat([this.type, buffer])
   }
 }
@@ -59,3 +59,14 @@ class AMFString extends AMFType {
 }
 
 exports.AMFString = AMFString
+
+class AMFNull extends AMFType {
+  constructor(type) {
+    super(type)
+  }
+  encode() {
+    return super.encode()
+  }
+}
+
+exports.AMFNull = AMFNull

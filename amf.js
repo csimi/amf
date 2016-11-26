@@ -11,7 +11,7 @@ class AMF {
       case "boolean": return this.handleBoolean(value)
       case "string": return this.handleString(value)
       case "object":
-        if (value instanceof null) return this.handleNull()
+        if (value === null) return this.handleNull()
         if (value instanceof Array) return this.handleArray(value)
         if (value instanceof Date) return this.handleDate(value)
         return this.handleObject(value)
