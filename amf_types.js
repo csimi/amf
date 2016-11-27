@@ -73,7 +73,7 @@ class AMFNull extends AMFType {
 exports.AMFNull = AMFNull
 
 class AMFArray extends AMFType {
-  constructo(type, value, options = { encoder: array => new Buffer(array) }) {
+  constructor(type, value, options = { encoder: array => new Buffer(array) }) {
     super(type)
     this.value = value
     this.encoder = options.encoder
@@ -90,4 +90,4 @@ class AMFArray extends AMFType {
   }
 }
 
-exports.AMFStrictArray = AMFStrictArray
+exports.AMFArray = AMFArray
