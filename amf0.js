@@ -1,54 +1,47 @@
 // import AMF from './amf'
-// import { AMFDouble } from './amf_types'
 
 var AMF = require('./amf')
-var AMFTypes = require('./amf_types')
-var AMFDouble = AMFTypes.AMFDouble
-var AMFBoolean = AMFTypes.AMFBoolean
-var AMFString = AMFTypes.AMFString
-var AMFNull = AMFTypes.AMFNull
-var AMFArray = AMFTypes.AMFArray
-var AMFObject = AMFTypes.AMFObject
-
-const AMF0_TYPE_NUMBER = 0x00
-const AMF0_TYPE_BOOLEAN = 0x01
-const AMF0_TYPE_STRING = 0x02
-const AMF0_TYPE_OBJECT = 0x03
-const AMF0_TYPE_NULL = 0x05
-const AMF0_TYPE_ECMA_ARRAY = 0x08
-const AMF0_TYPE_OBJECT_END = 0x09
-const AMF0_TYPE_STRICT_ARRAY = 0x0a
-const AMF0_TYPE_LONG_STRING = 0x0c
+var types = require('./amf_types')
 
 class AMF0 extends AMF {
   handleNumber(value) {
-    return new AMFDouble(AMF0_TYPE_NUMBER, value)
+    return new types.AMFDouble(AMF0.NUMBER, value)
   }
   handleBoolean(value) {
-    return new AMFBoolean(AMF0_TYPE_BOOLEAN, value)
+    return new types.AMFBoolean(AMF0.BOOLEAN, value)
   }
   handleString(value) {
-    let type = AMF0_TYPE_STRING
+    let type = AMF0.STRING
     let bitLength = 16
-    let isLong = value.length >> bitLength
+    const isLong = value.length >> bitLength
     if (isLong) {
-      type = AMF0_TYPE_LONG_STRING
+      type = AMF0.STRING_LONG
       bitLength = 32
     }
-    return new AMFString(type, value, { bitLength })
+    return new types.AMFString(type, value, { bitLength })
   }
   handleNull(value) {
-    return new AMFNull(AMF0_TYPE_NULL)
+    return new types.AMFNull(AMF0.NULL)
   }
   handleArray(value) {
     const isStrict = keys => keys.reduce((isStrict, key) => isStrict && Number.isInteger(key), true)
     return isStrict(Object.keys(array))
-      ? new AMFArray(AMF0_TYPE_STRICT_ARRAY, value, { encoder: array => this.encode(array) })
-      : new AMFArray(AMF0_TYPE_ECMA_ARRAY, value, { encoder: array => new AMFObject(array) })
+      ? new types.AMFArray(AMF0.ARRAY_STRICT, value, { encoder: array => this.encode(array) })
+      : new types.AMFArray(AMF0.ARRAY_ECMA, value, { encoder: array => new types.AMFObject(array) })
   }
   handleObject(value) {
-    return new AMFObject(AMF0_TYPE_OBJECT, value, { propertyEncoder: this, endType: AMF0_TYPE_OBJECT_END })
+    return new types.AMFObject(AMF0.OBJECT, value, { propertyEncoder: this, endType: AMF0.OBJECT_END })
   }
+  
+  static get NUMBER()       { return 0x00 }
+  static get BOOLEAN()      { return 0x01 }
+  static get STRING()       { return 0x02 }
+  static get OBJECT()       { return 0x03 }
+  static get NULL()         { return 0x05 }
+  static get ARRAY_ECMA()   { return 0x08 }
+  static get OBJECT_END()   { return 0x09 }
+  static get ARRAY_STRICT() { return 0x0a }
+  static get STRING_LONG()  { return 0x0c }
 }
 
 //export default AMF0

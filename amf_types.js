@@ -20,8 +20,6 @@ class AMFDouble extends AMFType {
   decode(buffer) {}
 }
 
-exports.AMFDouble = AMFDouble
-
 class AMFBoolean extends AMFType {
   constructor(type, value) {
     super(type)
@@ -34,8 +32,6 @@ class AMFBoolean extends AMFType {
   }
   decode() {}
 }
-
-exports.AMFBoolean = AMFBoolean
 
 class AMFString extends AMFType {
   constructor(type, value, options = { bitLength: 16 }) {
@@ -59,8 +55,6 @@ class AMFString extends AMFType {
   }
 }
 
-exports.AMFString = AMFString
-
 class AMFNull extends AMFType {
   constructor(type) {
     super(type)
@@ -69,8 +63,6 @@ class AMFNull extends AMFType {
     return super.encode()
   }
 }
-
-exports.AMFNull = AMFNull
 
 class AMFArray extends AMFType {
   constructor(type, value, options = { encoder: array => new Buffer(array) }) {
@@ -89,8 +81,6 @@ class AMFArray extends AMFType {
     return super.encode(value)
   }
 }
-
-exports.AMFArray = AMFArray
 
 class AMFObject extends AMFType {
   constructor(type, value, options = { propertyEncoder: () => new Buffer(0), endType: 0x00 }) {
@@ -112,4 +102,11 @@ class AMFObject extends AMFType {
   }
 }
 
-exports.AMFObject = AMFObject
+module.exports = {
+  AMFDouble,
+  AMFBoolean,
+  AMFString,
+  AMFNull,
+  AMFArray,
+  AMFObject
+}
