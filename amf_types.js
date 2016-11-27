@@ -52,9 +52,10 @@ class AMFString extends AMFType {
     return buffer
   }
   encode() {
-    let buffer = new Buffer(this.value, 'utf8')
-    let length = this.encodeLength()
-    return super.encode(Buffer.concat([length, buffer]))
+    const buffer = new Buffer(this.value, 'utf8')
+    const length = this.encodeLength()
+    const value = Buffer.concat([length, buffer])
+    return super.encode(value)
   }
 }
 
@@ -70,3 +71,23 @@ class AMFNull extends AMFType {
 }
 
 exports.AMFNull = AMFNull
+
+class AMFArray extends AMFType {
+  constructo(type, value, options = { encoder: array => new Buffer(array) }) {
+    super(type)
+    this.value = value
+    this.encoder = options.encoder
+  }
+  encodeLength() {
+    const buffer = new Buffer(4)
+    buffer.writeUInt32BE(this.value.length)
+    return buffer
+  }
+  encode() {
+    const length = this.encodeLength()
+    const value = Buffer.concat([length, this.encoder(this.value)])
+    return super.encode(value)
+  }
+}
+
+exports.AMFStrictArray = AMFStrictArray

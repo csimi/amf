@@ -31,6 +31,12 @@ class AMF0 extends AMF {
     const type = 0x05
     return new AMFNull(type)
   }
+  handleArray(value) {
+    const isStrict = keys => keys.reduce((isStrict, key) => isStrict && Number.isInteger(key), true)
+    return isStrict(Object.keys(array))
+      ? new AMFArray(type, value, { encoder: array => this.encode(array) })
+      : new AMFArray(type, value, { encoder: array => new AMFObject(array) })
+  }
 }
 
 //export default AMF0
