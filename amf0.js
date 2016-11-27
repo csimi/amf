@@ -8,6 +8,7 @@ var AMFBoolean = AMFTypes.AMFBoolean
 var AMFString = AMFTypes.AMFString
 var AMFNull = AMFTypes.AMFNull
 var AMFArray = AMFTypes.AMFArray
+var AMFObject = AMFTypes.AMFObject
 
 const AMF0_TYPE_NUMBER = 0x00
 const AMF0_TYPE_BOOLEAN = 0x01
@@ -44,6 +45,9 @@ class AMF0 extends AMF {
     return isStrict(Object.keys(array))
       ? new AMFArray(AMF0_TYPE_STRICT_ARRAY, value, { encoder: array => this.encode(array) })
       : new AMFArray(AMF0_TYPE_ECMA_ARRAY, value, { encoder: array => new AMFObject(array) })
+  }
+  handleObject(value) {
+    return new AMFObject(AMF0_TYPE_OBJECT, value, { propertyEncoder: this, endType: AMF0_TYPE_OBJECT_END })
   }
 }
 

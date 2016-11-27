@@ -1,6 +1,6 @@
 class AMFType {
   constructor(type) {
-    this.type = new Buffer([type])
+    this.type = type !== undefined ? new Buffer([type]) : new Buffer(0)
   }
   encode(buffer = new Buffer(0)) {
     return Buffer.concat([this.type, buffer])
@@ -91,3 +91,25 @@ class AMFArray extends AMFType {
 }
 
 exports.AMFArray = AMFArray
+
+class AMFObject extends AMFType {
+  constructor(type, value, options = { propertyEncoder: () => new Buffer(0), endType: 0x00 }) {
+    super(type)
+    this.value = value
+    this.endType = options.endType
+    this.propertyEncoder = options.propertyEncoder
+  }
+  encode() {
+    const keys = Object.keys(this.value)
+    const properties = keys.map(key => Buffer.concat([
+      new AMFString(undefined, key).encode(),
+      this.propertyEncoder.encode(this.value[key])
+    ]))
+    return Buffer.concat([
+      super.encode(Buffer.concat(properties)),
+      new Buffer([0, 0, this.endType])
+    ])
+  }
+}
+
+exports.AMFObject = AMFObject
