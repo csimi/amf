@@ -65,10 +65,10 @@ class AMFNull extends AMFType {
 }
 
 class AMFArray extends AMFType {
-  constructor(type, value, options = { encoder: array => new Buffer(array) }) {
+  constructor(type, value, options = { propertyEncoder: () => new Buffer(0) }) {
     super(type)
     this.value = value
-    this.encoder = options.encoder
+    this.propertyEncoder = options.propertyEncoder
   }
   encodeLength() {
     const buffer = new Buffer(4)
@@ -76,9 +76,15 @@ class AMFArray extends AMFType {
     return buffer
   }
   encode() {
-    const length = this.encodeLength()
-    const value = Buffer.concat([length, this.encoder(this.value)])
+    const value = Buffer.concat([
+      this.encodeLength(), 
+      this.propertyEncoder.encode(this.value)
+    ])
     return super.encode(value)
+  }
+  static isStrict(array) {
+    const keys = Object.keys(array)
+    return keys.reduce((isStrict, key) => isStrict && Number.isInteger(key), true)
   }
 }
 

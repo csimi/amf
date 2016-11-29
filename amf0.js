@@ -24,10 +24,9 @@ class AMF0 extends AMF {
     return new types.AMFNull(AMF0.NULL)
   }
   handleArray(value) {
-    const isStrict = keys => keys.reduce((isStrict, key) => isStrict && Number.isInteger(key), true)
-    return isStrict(Object.keys(array))
-      ? new types.AMFArray(AMF0.ARRAY_STRICT, value, { encoder: array => this.encode(array) })
-      : new types.AMFArray(AMF0.ARRAY_ECMA, value, { encoder: array => new types.AMFObject(array) })
+    return AMFArray.isStrict(value)
+      ? new types.AMFArray(AMF0.ARRAY_STRICT, value, { propertyEncoder: this })
+      : new types.AMFObject(AMF0.ARRAY_ECMA, value, { propertyEncoder: this })
   }
   handleObject(value) {
     return new types.AMFObject(AMF0.OBJECT, value, { propertyEncoder: this, endType: AMF0.OBJECT_END })
