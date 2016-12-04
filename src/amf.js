@@ -44,5 +44,4 @@ class AMF {
   }
 }
 
-// export default AMF
 module.exports = AMF

@@ -1,5 +1,3 @@
-// import AMF from './amf'
-
 var AMF = require('./amf')
 var types = require('./amf_types')
 
@@ -43,5 +41,4 @@ class AMF0 extends AMF {
   static get STRING_LONG()  { return 0x0c }
 }
 
-//export default AMF0
 module.exports = AMF0

@@ -1,0 +1,25 @@
+var AMFType = require('./base_type')
+
+class AMFString extends AMFType {
+  constructor(type, value, options = { bitLength: 16 }) {
+    super(type)
+    this.value = value
+    this.bitLength = options.bitLength
+  }
+  encodeLength() {
+    let length = this.value.length
+    let buffer = new Buffer(this.bitLength/8)
+    this.bitLength === 16
+      ? buffer.writeUInt16BE(length)
+      : buffer.writeUInt32BE(length)
+    return buffer
+  }
+  encode() {
+    const buffer = new Buffer(this.value, 'utf8')
+    const length = this.encodeLength()
+    const value = Buffer.concat([length, buffer])
+    return super.encode(value)
+  }
+}
+
+module.exports = AMFString
