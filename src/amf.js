@@ -1,7 +1,6 @@
 class AMF {
-  encode(value) {
-    let rawValues = [].concat(value)
-    let encodedValues = rawValues.map(rawValue => this.inferType(rawValue).encode())
+  encode(...values) {
+    let encodedValues = values.map(value => this.inferType(value).encode())
     return Buffer.concat(encodedValues)
   }
   decode(buffer) {}
