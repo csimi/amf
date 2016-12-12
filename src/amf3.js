@@ -5,4 +5,4 @@ class AMF3 extends AMF {
   handleNumber(value) {}
 }
 
-export default AMF3
+module.exports = AMF3
