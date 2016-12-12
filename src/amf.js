@@ -17,6 +17,9 @@ class AMF {
       case "undefined": return this.handleUndefined()
     }
   }
+  getEncoding(){
+    throw new Error("encoding not set")
+  }
   handleNumber(value) {
     throw new Error("cannot handle Number type")
   }

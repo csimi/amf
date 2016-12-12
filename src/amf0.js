@@ -1,6 +1,8 @@
 var AMF = require('./amf')
 var types = require('./amf_types')
 
+const AMF0_ENCODING = 0
+
 class AMF0 extends AMF {
   handleNumber(value) {
     return new types.AMFDouble(AMF0.NUMBER, value)
@@ -30,6 +32,10 @@ class AMF0 extends AMF {
     return new types.AMFObject(AMF0.OBJECT, value, { propertyEncoder: this, endType: AMF0.OBJECT_END })
   }
   
+  get encoding() {
+    return AMF0_ENCODING
+  }
+
   static get NUMBER()       { return 0x00 }
   static get BOOLEAN()      { return 0x01 }
   static get STRING()       { return 0x02 }
