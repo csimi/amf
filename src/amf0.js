@@ -24,7 +24,7 @@ class AMF0 extends AMF {
     return new types.AMFNull(AMF0.NULL)
   }
   handleArray(value) {
-    return AMFArray.isStrict(value)
+    return types.AMFArray.isStrict(value)
       ? new types.AMFArray(AMF0.ARRAY_STRICT, value, { propertyEncoder: this })
       : new types.AMFObject(AMF0.ARRAY_ECMA, value, { propertyEncoder: this })
   }
