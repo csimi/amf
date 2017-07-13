@@ -7,6 +7,11 @@ class AMFNull extends AMFType {
   encode() {
     return super.encode()
   }
+  decode() {
+    this.value = null
+    return super.decode()
+  }
+  get length(){ return 1 }
 }
 
 module.exports = AMFNull
