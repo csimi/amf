@@ -4,6 +4,26 @@ var types = require('./amf_types')
 const AMF0_ENCODING = 0
 
 class AMF0 extends AMF {
+  inferAMFType(code) {
+    switch(code) {
+    case AMF0.NUMBER:
+        return new types.AMFDouble(code)
+    case AMF0.BOOLEAN:
+      return new types.AMFBoolean(code)
+    case AMF0.STRING:
+      return new types.AMFString(code, '', { bitLength: 16 })
+    case AMF0.STRING_LONG:
+      return new types.AMFString(code, '', { bitLength: 32 })
+    case AMF0.NULL:
+      return new types.AMFNull(code)
+    case AMF0.ARRAY_STRICT:
+      return new types.AMFArray(code, [], { propertyEncoder: this })
+    case AMF0.ARRAY_ECMA:
+      return new types.AMFObject(code, {}, { propertyEncoder: this })
+    case AMF0.OBJECT:
+      return new types.AMFObject(code, {}, { propertyEncoder: this, endType: AMF0.OBJECT_END })
+    }
+  }
   handleNumber(value) {
     return new types.AMFDouble(AMF0.NUMBER, value)
   }
@@ -35,16 +55,16 @@ class AMF0 extends AMF {
   get encoding() {
     return AMF0_ENCODING
   }
-
-  static get NUMBER()       { return 0x00 }
-  static get BOOLEAN()      { return 0x01 }
-  static get STRING()       { return 0x02 }
-  static get OBJECT()       { return 0x03 }
-  static get NULL()         { return 0x05 }
-  static get ARRAY_ECMA()   { return 0x08 }
-  static get OBJECT_END()   { return 0x09 }
-  static get ARRAY_STRICT() { return 0x0a }
-  static get STRING_LONG()  { return 0x0c }
 }
+
+AMF0.NUMBER       = 0x00
+AMF0.BOOLEAN      = 0x01
+AMF0.STRING       = 0x02
+AMF0.OBJECT       = 0x03
+AMF0.NULL         = 0x05
+AMF0.ARRAY_ECMA   = 0x08
+AMF0.OBJECT_END   = 0x09
+AMF0.ARRAY_STRICT = 0x0a
+AMF0.STRING_LONG  = 0x0c
 
 module.exports = AMF0

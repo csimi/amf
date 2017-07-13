@@ -5,6 +5,9 @@ class AMFType {
   encode(buffer = new Buffer(0)) {
     return Buffer.concat([this.type, buffer])
   }
+  decode() {
+    return this
+  }
 }
 
 module.exports = AMFType

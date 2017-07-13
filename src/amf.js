@@ -1,10 +1,15 @@
 class AMF {
   encode(...values) {
-    let encodedValues = values.map(value => this.inferType(value).encode())
+    let encodedValues = values.map(value => this.inferJSType(value).encode())
     return Buffer.concat(encodedValues)
   }
-  decode(buffer) {}
-  inferType(value) {
+  decode(buffer) {
+    if (!buffer.length) return []
+    const type = this.inferAMFType(buffer[0]).decode(buffer)
+    const remainingValues = this.decode(buffer.slice(type.length))
+    return [type.value].concat(...remainingValues)
+  }
+  inferJSType(value) {
     switch (typeof value) {
       case "number": return this.handleNumber(value)
       case "boolean": return this.handleBoolean(value)
@@ -16,6 +21,9 @@ class AMF {
         return this.handleObject(value)
       case "undefined": return this.handleUndefined()
     }
+  }
+  inferAMFType(int) {
+    throw new Error("AMF type inference depends on version")
   }
   getEncoding(){
     throw new Error("encoding not set")
