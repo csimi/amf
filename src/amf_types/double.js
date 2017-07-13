@@ -10,7 +10,13 @@ class AMFDouble extends AMFType {
     buffer.writeDoubleBE(this.value)
     return super.encode(buffer)
   }
-  decode(buffer) {}
+  decode(buffer) {
+    this.value = buffer.readDoubleBE(1)
+    return super.decode()
+  }
+  get length() {
+    return 9
+  }
 }
 
 module.exports = AMFDouble
