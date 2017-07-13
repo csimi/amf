@@ -20,6 +20,17 @@ class AMFString extends AMFType {
     const value = Buffer.concat([length, buffer])
     return super.encode(value)
   }
+  decode(buffer) {
+    this.value = ''
+    const length = this.bitLength === 16
+      ? buffer.readUInt16BE(1)
+      : buffer.readUInt32BE(1)
+    this.value = buffer.slice(this.length, this.length + length).toString('utf8')
+    return super.decode()
+  }
+  get length() {
+    return 1 + this.bitLength/8 + this.value.length
+  }
 }
 
 module.exports = AMFString
