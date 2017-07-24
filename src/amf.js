@@ -1,13 +1,19 @@
 class AMF {
   encode(...values) {
-    let encodedValues = values.map(value => this.inferJSType(value).encode())
+    let encodedValues = values.map(value => this.encodeValue(value))
     return Buffer.concat(encodedValues)
   }
   decode(buffer) {
     if (!buffer.length) return []
-    const type = this.inferAMFType(buffer[0]).decode(buffer)
+    const type = this.decodeValue(buffer)
     const remainingValues = this.decode(buffer.slice(type.length))
     return [type.value].concat(...remainingValues)
+  }
+  encodeValue(value) {
+    return this.inferJSType(value).encode()
+  }
+  decodeValue(buffer) {
+    return this.inferAMFType(buffer[0]).decode(buffer)
   }
   inferJSType(value) {
     switch (typeof value) {
