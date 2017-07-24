@@ -28,8 +28,8 @@ class AMFObject extends AMFType {
     ])
   }
   decode(buffer) {
-    this.value = this._decode(buffer.slice(1))
     this.length = buffer.length
+    this.value = this._decode(buffer.slice(1))
     return super.decode()
   }
   _decode(buffer, obj = {}) {
