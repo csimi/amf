@@ -1,7 +1,7 @@
 var AMFType = require('./base_type')
 
 class AMFString extends AMFType {
-  constructor(type, value, options = { bitLength: 16 }) {
+  constructor(type, value = '', options = { bitLength: 16 }) {
     super(type)
     this.value = value
     this.bitLength = options.bitLength
