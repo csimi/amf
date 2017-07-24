@@ -21,7 +21,7 @@ class AMF0 extends AMF {
     case AMF0.ARRAY_ECMA:
       return new types.AMFObject(code, {}, { propertyEncoder: this })
     case AMF0.OBJECT:
-      return new types.AMFObject(code, {}, { propertyEncoder: this, endType: AMF0.OBJECT_END })
+      return new types.AMFObject(code, {}, { propertyEncoder: this, propertyDecoder: this, endType: AMF0.OBJECT_END })
     }
   }
   handleNumber(value) {
@@ -49,9 +49,9 @@ class AMF0 extends AMF {
       : new types.AMFObject(AMF0.ARRAY_ECMA, value, { propertyEncoder: this })
   }
   handleObject(value) {
-    return new types.AMFObject(AMF0.OBJECT, value, { propertyEncoder: this, endType: AMF0.OBJECT_END })
+    return new types.AMFObject(AMF0.OBJECT, value, { propertyEncoder: this, propertyDecoder: this, endType: AMF0.OBJECT_END })
   }
-  
+
   get encoding() {
     return AMF0_ENCODING
   }
