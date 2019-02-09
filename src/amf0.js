@@ -19,7 +19,7 @@ class AMF0 extends AMF {
     case AMF0.ARRAY_STRICT:
       return new types.AMFArray(code, [], { propertyEncoder: this })
     case AMF0.ARRAY_ECMA:
-      return new types.AMFObject(code, {}, { propertyEncoder: this })
+      return new types.AMFArrayEcma(code, {}, { propertyEncoder: this, propertyDecoder: this, endType: AMF0.OBJECT_END })
     case AMF0.OBJECT:
       return new types.AMFObject(code, {}, { propertyEncoder: this, propertyDecoder: this, endType: AMF0.OBJECT_END })
     }

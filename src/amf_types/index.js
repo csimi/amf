@@ -3,6 +3,7 @@ module.exports = {
   AMFBoolean: require('./boolean'),
   AMFString: require('./string'),
   AMFNull: require('./null'),
+  AMFArrayEcma: require('./array_ecma'),
   AMFArray: require('./array'),
   AMFObject: require('./object')
 }
