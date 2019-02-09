@@ -1,5 +1,8 @@
 var AMFType = require('./base_type')
 
+const TYPE_LENGTH = 1
+const DOUBLE_LENGTH = 8
+
 class AMFDouble extends AMFType {
   constructor(type, value) {
     super(type)
@@ -15,7 +18,7 @@ class AMFDouble extends AMFType {
     return super.decode()
   }
   get length() {
-    return 9
+    return TYPE_LENGTH + DOUBLE_LENGTH
   }
 }
 
