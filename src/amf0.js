@@ -16,6 +16,8 @@ class AMF0 extends AMF {
       return new types.AMFString(code, '', { bitLength: 32 })
     case AMF0.NULL:
       return new types.AMFNull(code)
+    case AMF0.UNDEFINED:
+      return new types.AMFUndefined(code)
     case AMF0.ARRAY_STRICT:
       return new types.AMFArray(code, [], { propertyEncoder: this })
     case AMF0.ARRAY_ECMA:
@@ -43,6 +45,9 @@ class AMF0 extends AMF {
   handleNull(value) {
     return new types.AMFNull(AMF0.NULL)
   }
+  handleUndefined(value) {
+    return new types.AMFUndefined(AMF0.UNDEFINED)
+  }
   handleArray(value) {
     return types.AMFArray.isStrict(value)
       ? new types.AMFArray(AMF0.ARRAY_STRICT, value, { propertyEncoder: this })
@@ -62,6 +67,7 @@ AMF0.BOOLEAN      = 0x01
 AMF0.STRING       = 0x02
 AMF0.OBJECT       = 0x03
 AMF0.NULL         = 0x05
+AMF0.UNDEFINED    = 0x06
 AMF0.ARRAY_ECMA   = 0x08
 AMF0.OBJECT_END   = 0x09
 AMF0.ARRAY_STRICT = 0x0a
