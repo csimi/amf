@@ -1,13 +1,13 @@
 var AMFType = require('./base_type')
 
 class AMFArray extends AMFType {
-  constructor(type, value, options = { propertyEncoder: () => new Buffer(0) }) {
+  constructor(type, value, options = { propertyEncoder: () => Buffer.alloc(0) }) {
     super(type)
     this.value = value
     this.propertyEncoder = options.propertyEncoder
   }
   encodeLength() {
-    const buffer = new Buffer(4)
+    const buffer = Buffer.alloc(4)
     buffer.writeUInt32BE(this.value.length)
     return buffer
   }

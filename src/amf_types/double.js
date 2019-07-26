@@ -9,7 +9,7 @@ class AMFDouble extends AMFType {
     this.value = value
   }
   encode() {
-    let buffer = new Buffer(8)
+    let buffer = Buffer.alloc(8)
     buffer.writeDoubleBE(this.value)
     return super.encode(buffer)
   }

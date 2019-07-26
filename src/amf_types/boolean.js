@@ -6,7 +6,7 @@ class AMFBoolean extends AMFType {
     this.value = value
   }
   encode() {
-    let buffer = new Buffer(1)
+    let buffer = Buffer.alloc(1)
     buffer.writeUInt8(+this.value)
     return super.encode(buffer)
   }

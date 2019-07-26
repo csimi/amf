@@ -2,7 +2,7 @@ var AMFType = require('./base_type')
 var AMFString = require('./string')
 
 const propertyEncoder = {
-  encode: () => new Buffer(0)
+  encode: () => Buffer.alloc(0)
 }
 const propertyDecoder = {
   decode: () => {}
@@ -24,7 +24,7 @@ class AMFObject extends AMFType {
     ]))
     return Buffer.concat([
       super.encode(Buffer.concat(properties)),
-      new Buffer([0, 0, this.endType])
+      Buffer.from([0, 0, this.endType])
     ])
   }
   decode(buffer) {
