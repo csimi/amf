@@ -22,6 +22,8 @@ class AMF0 extends AMF {
       return new types.AMFArrayEcma(code, {}, { propertyEncoder: this, propertyDecoder: this, endType: AMF0.OBJECT_END })
     case AMF0.OBJECT:
       return new types.AMFObject(code, {}, { propertyEncoder: this, propertyDecoder: this, endType: AMF0.OBJECT_END })
+    case AMF0.DATE:
+      return new types.AMFDate(code)
     }
   }
   handleNumber(value) {
@@ -51,6 +53,9 @@ class AMF0 extends AMF {
   handleObject(value) {
     return new types.AMFObject(AMF0.OBJECT, value, { propertyEncoder: this, propertyDecoder: this, endType: AMF0.OBJECT_END })
   }
+  handleDate(value) {
+    return new types.AMFDate(AMF0.DATE, value)
+  }
 
   get encoding() {
     return AMF0_ENCODING
@@ -65,6 +70,7 @@ AMF0.NULL         = 0x05
 AMF0.ARRAY_ECMA   = 0x08
 AMF0.OBJECT_END   = 0x09
 AMF0.ARRAY_STRICT = 0x0a
+AMF0.DATE         = 0x0b
 AMF0.STRING_LONG  = 0x0c
 
 module.exports = AMF0
