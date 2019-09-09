@@ -13,14 +13,10 @@ class AMFArray extends AMFType {
   }
   encode() {
     const value = Buffer.concat([
-      this.encodeLength(), 
-      this.propertyEncoder.encode(this.value)
+      this.encodeLength(),
+      this.propertyEncoder.encode(...this.value)
     ])
     return super.encode(value)
-  }
-  static isStrict(array) {
-    const keys = Object.keys(array)
-    return keys.reduce((isStrict, key) => isStrict && Number.isInteger(key), true)
   }
 }
 
