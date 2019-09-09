@@ -6,9 +6,24 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:csimi/amf.git"
+  },
+  "publishConfig": {
+    "registry": "https://ip-109-71-162-126.dditscdn.com/nexus/repository/docler-npm"
+  },
+  "keywords": [
+    "amf",
+    "amf0"
+  ],
   "author": "arturomtm <arturomtm@gmail.com>",
   "license": "MIT",
   "devDependencies": {
     "buffer-equal": "^1.0.0"
-  }
+  },
+  "files": [
+    "index.js",
+    "src/**"
+  ]
 }
