@@ -6,5 +6,6 @@ module.exports = {
   AMFUndefined: require('./undefined'),
   AMFArrayEcma: require('./array_ecma'),
   AMFArray: require('./array'),
-  AMFObject: require('./object')
+  AMFObject: require('./object'),
+  AMFDate: require('./date')
 }
