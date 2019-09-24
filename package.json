@@ -1,14 +1,29 @@
 {
-  "name": "rtmp-amf",
-  "version": "1.0.0",
+  "name": "@csimi/amf",
+  "version": "1.0.1",
   "description": "amf encoder/decoder for rtmp protocol",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:csimi/amf.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "author": "arturomtm <arturomtm@gmail.com>",
   "license": "MIT",
   "devDependencies": {
     "buffer-equal": "^1.0.0"
-  }
+  },
+  "files": [
+    "index.js",
+    "src/**"
+  ],
+  "keywords": [
+    "amf",
+    "amf0"
+  ]
 }
